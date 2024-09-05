@@ -6,12 +6,12 @@ in the library. The Book class should demonstrate encapsulation principles by ke
 private and provide controlled access through public methods.
 
 Requirements:
-    * title(String): The title of the book. This should be kept private to prevent
+    1. title(String): The title of the book. This should be kept private to prevent
     unauthorized modification
-    * author(String): The author of the book. This should also be kept private
-    * isbn(String): The International Standard Book Number of the book. This is
+    2. author(String): The author of the book. This should also be kept private
+    3. isbn(String): The International Standard Book Number of the book. This is
     unique and private
-    * availableCopies(int): The number of available copies of the book in the library
+    4. availableCopies(int): The number of available copies of the book in the library
     This should be private to prevent direct access and manipulation
 
 Use Case:
