@@ -72,7 +72,17 @@ public class Main{
                     }
                     break;
                 case 4:
+                    int num = 0;
                     System.out.print("\033[H\033[2J");
+                    for(Book i : book){
+                        num++;
+                        System.out.println("=================================================");
+                        System.out.println("Details: ");
+                        System.out.println(num + ".)\tTitle: " + i.getTitle());
+                        System.out.println("\tAuthor: " + i.getAuthor());
+                        System.out.println("\tAvailable Copies: " + i.getAvailableCopies());
+                        System.out.println("=================================================\n");
+                    }
                     break;
                 
                 case 5:
