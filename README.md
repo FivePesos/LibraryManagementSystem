@@ -15,5 +15,5 @@ Requirements:
     This should be private to prevent direct access and manipulation
 
 Use Case:
-    * User should be able to create a book, borrow a book, return a book, get the details of the book
+    * You should be able to create a book, borrow a book, return a book, get the details of the book
     and get it's available number of copies
