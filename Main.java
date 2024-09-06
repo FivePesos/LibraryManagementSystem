@@ -4,28 +4,37 @@ public class Main{
     public static void main(String... args){
         Scanner scan = new Scanner(System.in);
         
-        String title, author, isbn;
-        int availableCopies, response;
-
-        System.out.println("Welcome to the library management system");
-        System.out.println("    Please create you first book.       ");
-        System.out.print("Enter Book title: ");
-        title = scan.nextLine();
-        System.out.print("Enter Book author: ");
-        author = scan.nextLine();
-        System.out.print("Enter Book isbn: ");
-        isbn = scan.nextLine();
-        System.out.print("Enter Book Copies: ");
-        availableCopies = scan.nextInt();
-        scan.nextLine();
+        String title="", author="", isbn = "";
+        int availableCopies = 0, response, booksBorrowed = 0;
+        
+        while(isbn.length() != 13 || availableCopies <= 0){
+            System.out.println("Welcome to the library management system");
+            System.out.println("    Please create/add you first book.       ");
+            System.out.print("Enter Book title: ");
+            title = scan.nextLine();
+            System.out.print("Enter Book author: ");
+            author = scan.nextLine();
+            System.out.print("Enter Book isbn (Must be unique and have 13 characters): ");
+            isbn = scan.nextLine();
+            System.out.print("Enter Book Copies: ");
+            availableCopies = scan.nextInt();
+            scan.nextLine();
+            if(isbn.length() != 13)
+                System.out.print("\033[H\033[2J");
+                System.out.println("ISBN MUST CONTAIN 13 CHARACTERS");
+            if(availableCopies <= 0){
+                System.out.print("\033[H\033[2J");
+                System.out.println("YOU MUST HAVE ATLEAST 1 COPY");
+            }
+        }
+        
         System.out.print("\033[H\033[2J");
-
         ArrayList <Book> book = new ArrayList<>();
         book.add(new Book(title, author, isbn, availableCopies));
         boolean loop = true;
-
+    
         while(loop == true){
-            System.out.println("1. Create another book");
+            System.out.println("1. Create/add another book");
             System.out.println("2. Borrow a book");
             System.out.println("3. Return a book");
             System.out.println("4. Get details");
@@ -36,40 +45,85 @@ public class Main{
 
             switch(response){
                 case 1:
+                    boolean isbnDuplicate = false;
                     System.out.print("\033[H\033[2J");
 
                     System.out.print("Enter Book title: ");
                     title = scan.nextLine();
                     System.out.print("Enter Book author: ");
                     author = scan.nextLine();
-                    System.out.print("Enter Book isbn: ");
+                    System.out.print("Enter Book isbn (Must be unique and have 13 characters): ");
                     isbn = scan.nextLine();
                     System.out.print("Enter Book Copies: ");
                     availableCopies = scan.nextInt();
                     scan.nextLine();
-                    book.add(new Book(title, author, isbn, availableCopies));
+
+                    for(Book i : book){
+                        if(i.getIsbn().equals(isbn)){
+                            isbnDuplicate= true;
+                        }
+                    }
+
+                    if(isbnDuplicate == false && isbn.length() == 13 && availableCopies > 0){
+                        book.add(new Book(title, author, isbn, availableCopies));
+                        System.out.println("BOOK ADDED SUCCESFULLY");
+                    }else if(isbnDuplicate == true && isbn.length() != 13 && availableCopies > 0){
+                        System.out.println("PLEASE ENTER A UNIQUE 13 CHARACTER ISBN\n");
+                    }else if(isbnDuplicate == false && isbn.length() == 13 && availableCopies <= 0){
+                        System.out.println("YOU MUST HAVE ATLEAST 1 COPY");
+                    }else{
+                        System.out.println("PLEASE ENTER A UNIQUE 13 CHARACTER ISBN");
+                        System.out.println("YOU MUST HAVE ATLEAST 1 COPY");
+                    }
+                    
                     break;
+
                 case 2:
+                    System.out.print("\033[H\033[2J");
                     System.out.print("\nEnter Book isbn to borrow: ");
                     isbn = scan.nextLine();
+                    boolean successfullyBorrowed = false;
                     for(Book i: book){
                         if(i.getIsbn().equals(isbn) && i.getAvailableCopies() > 0){
+                            successfullyBorrowed = true;
                             i.setAvailableCopies(i.getAvailableCopies() - 1);
                             System.out.println("Book borrowed successfully.");
+                            booksBorrowed++;
                             break;
+                        }
+
+                        if(successfullyBorrowed == false){
+                            System.out.print("\033[H\033[2J");
+                            System.out.println("Invalid ISBN or No more copies of the book");
                         }
                     }
                     break;
+
                 case 3:
-                    System.out.print("\nEnter Book isbn to return: ");
-                    isbn = scan.nextLine();
-                    for (Book i : book) {
-                        if (i.getIsbn().equals(isbn)) {
-                            i.setAvailableCopies(i.getAvailableCopies() + 1);
-                            System.out.println("Book returned successfully.");
-                            break;
+                    System.out.print("\033[H\033[2J");
+                    
+                    if(booksBorrowed > 0){
+                        System.out.print("\nEnter Book isbn to return: ");
+                        isbn = scan.nextLine();
+                        boolean successfullyReturned = false;
+                        for (Book i : book) {
+                            if (i.getIsbn().equals(isbn)) {
+                                i.setAvailableCopies(i.getAvailableCopies() + 1);
+                                System.out.println("Book returned successfully.");
+                                booksBorrowed--;
+                                successfullyReturned = true;
+                                break;
+                            }
+    
+                            if(successfullyReturned == false){
+                                System.out.println("Invalid ISBN or No book available");
+                            }
                         }
+                    }else{
+                        System.out.print("\033[H\033[2J");
+                        System.out.println("No borrowed books\n");
                     }
+                    
                     break;
                 case 4:
                     int num = 0;
@@ -80,6 +134,7 @@ public class Main{
                         System.out.println("Details: ");
                         System.out.println(num + ".)\tTitle: " + i.getTitle());
                         System.out.println("\tAuthor: " + i.getAuthor());
+                        System.out.println("\tISBN: " + i.getIsbn());
                         System.out.println("\tAvailable Copies: " + i.getAvailableCopies());
                         System.out.println("=================================================\n");
                     }
@@ -88,6 +143,10 @@ public class Main{
                 case 5:
                     System.out.println("Exiting...");
                     loop = false;
+                    break;
+
+                default:
+                    System.out.println("Invalid choice. Please enter a number between 1 and 5.");
                     break;
             }
         }
