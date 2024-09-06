@@ -21,10 +21,10 @@ public class Main{
             scan.nextLine();
             if(isbn.length() != 13)
                 System.out.print("\033[H\033[2J");
-                System.out.println("ISBN MUST CONTAIN 13 CHARACTERS");
+                System.out.println("ISBN must contain 13 characters.");
             if(availableCopies <= 0){
                 System.out.print("\033[H\033[2J");
-                System.out.println("YOU MUST HAVE ATLEAST 1 COPY");
+                System.out.println("You must have atleast 1 copy of your book.");
             }
         }
         
@@ -66,14 +66,14 @@ public class Main{
 
                     if(isbnDuplicate == false && isbn.length() == 13 && availableCopies > 0){
                         book.add(new Book(title, author, isbn, availableCopies));
-                        System.out.println("BOOK ADDED SUCCESFULLY");
+                        System.out.println("BOOK ADDED SUCCESFULLY.");
                     }else if(isbnDuplicate == true && isbn.length() != 13 && availableCopies > 0){
-                        System.out.println("PLEASE ENTER A UNIQUE 13 CHARACTER ISBN\n");
+                        System.out.println("Please enter a unique 13 character ISBN.\n");
                     }else if(isbnDuplicate == false && isbn.length() == 13 && availableCopies <= 0){
-                        System.out.println("YOU MUST HAVE ATLEAST 1 COPY");
+                        System.out.println("You must have atleast 1 copy of your book.");
                     }else{
-                        System.out.println("PLEASE ENTER A UNIQUE 13 CHARACTER ISBN");
-                        System.out.println("YOU MUST HAVE ATLEAST 1 COPY");
+                        System.out.println("Please enter a unique 13 character ISBN.");
+                        System.out.println("You must have atleast 1 copy of your book.");
                     }
                     
                     break;
@@ -116,12 +116,12 @@ public class Main{
                             }
     
                             if(successfullyReturned == false){
-                                System.out.println("Invalid ISBN or No book available");
+                                System.out.println("Invalid ISBN or this book was not borrowed.");
                             }
                         }
                     }else{
                         System.out.print("\033[H\033[2J");
-                        System.out.println("No borrowed books\n");
+                        System.out.println("No borrowed books to return.\n");
                     }
                     
                     break;
