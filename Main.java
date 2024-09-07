@@ -6,7 +6,7 @@ public class Main {
     public static void main(String... args) {
         Scanner scan = new Scanner(System.in);
         List<Book> books = new ArrayList<>();
-        
+
         String title = "", author = "", isbn = "";
         int availableCopies = 0, response;
 
@@ -25,14 +25,14 @@ public class Main {
 
             if (isbn.length() != 13) {
                 System.out.print("\033[H\033[2J");
-                System.out.println("ISBN must contain exactly 13 digits.");
+                System.out.println("\u001B[31m"+"ISBN must contain exactly 13 digits."+"\u001B[0m");
             } else if (availableCopies <= 0) {
                 System.out.print("\033[H\033[2J");
-                System.out.println("You must have at least 1 copy of your book.");
+                System.out.println("\u001B[31m"+"You must have at least 1 copy of your book."+"\u001B[0m");
             } else {
                 System.out.print("\033[H\033[2J");
                 books.add(new Book(title, author, isbn, availableCopies));
-                System.out.println("Book added successfully.");
+                System.out.println("\u001B[32m"+ "Book added successfully." + "\u001B[0m");
                 break;
             }
         }
@@ -42,7 +42,7 @@ public class Main {
             displayMenu();
             while (!scan.hasNextInt()) {
                 scan.next(); 
-                System.out.print("Invalid input. Please enter a number between 1 and 5: ");
+                System.out.print("\u001B[31m"+"Invalid input. Please enter a number between 1 and 5: "+"\u001B[0m");
             }
             response = scan.nextInt();
 
@@ -60,7 +60,7 @@ public class Main {
                     System.out.print("Enter Book Copies: ");
                     availableCopies = scan.nextInt();
                     scan.nextLine(); 
-            
+
                     for (Book book : books) {
                         if (book.getIsbn().equals(isbn)) {
                             isbnDuplicate = true;
@@ -70,13 +70,13 @@ public class Main {
             
                     if (!isbnDuplicate && isbn.length() == 13 && availableCopies > 0) {
                         books.add(new Book(title, author, isbn, availableCopies));
-                        System.out.println("Book added successfully.");
+                        System.out.println("\u001B[32m"+"Book added successfully."+"\u001B[0m");
                     } else if (isbnDuplicate) {
-                        System.out.println("ISBN must be unique. Please enter a different ISBN.");
+                        System.out.println("\u001B[31m"+"ISBN must be unique. Please enter a different ISBN."+"\u001B[0m");
                     } else if (isbn.length() != 13) {
-                        System.out.println("ISBN must contain exactly 13 digits.");
+                        System.out.println("\u001B[31m"+"ISBN must contain exactly 13 digits."+"\u001B[0m");
                     } else if (availableCopies <= 0) {
-                        System.out.println("You must have at least 1 copy of your book.");
+                        System.out.println("\u001B[31m"+"You must have at least 1 copy of your book."+"\u001B[0m");
                     }
                     break;
                 case 2:
@@ -89,7 +89,7 @@ public class Main {
                     for (Book book : books) {
                         if (book.getIsbn().equals(isbn) && book.getAvailableCopies() > 0) {
                             book.setAvailableCopies(book.getAvailableCopies() - 1);
-                            System.out.println("Book borrowed successfully.");
+                            System.out.println("\u001B[32m"+ "Book borrowed successfully."+"\u001B[0m");
                             System.out.println("=======================================");
                             System.out.println("Borrowed Book Details:");
                             System.out.println(book.getFormattedDetails());
@@ -101,7 +101,7 @@ public class Main {
                     }
             
                     if (!successfullyBorrowed) {
-                        System.out.println("Invalid ISBN or no more copies available.");
+                        System.out.println("\u001B[31m"+"Invalid ISBN or no more copies available."+"\u001B[0m");
                     }
                     break;
                 case 3:
@@ -115,11 +115,11 @@ public class Main {
                         for (Book book : books) {
                             if (book.getIsbn().equals(isbn)) {
                                 book.setAvailableCopies(book.getAvailableCopies() + 1);
-                                System.out.println("Book returned successfully.");
+                                System.out.println("\u001B[32m"+"Book returned successfully."+"\u001B[0m");
                                 System.out.println("=======================================");
                                 System.out.println("Returned Book Details:");
-                                System.out.println("=======================================");
                                 System.out.println(book.getFormattedDetails());
+                                System.out.println("=======================================");
                                 successfullyReturned = true;
                                 booksBorrowed--;
                                 break;
@@ -127,10 +127,10 @@ public class Main {
                         }
             
                         if (!successfullyReturned) {
-                            System.out.println("Invalid ISBN or this book was not borrowed.");
+                            System.out.println("\u001B[31m"+"Invalid ISBN or this book was not borrowed."+"\u001B[0m");
                         }
                     } else {
-                        System.out.println("No borrowed books to return.");
+                        System.out.println("\u001B[31m"+"No borrowed books to return."+"\u001B[0m");
                     }
                     break;
                 case 4:
@@ -150,7 +150,7 @@ public class Main {
                     loop = false;
                     break;
                 default:
-                    System.out.println("Invalid choice. Please enter a number between 1 and 5.");
+                    System.out.println("\u001B[31m" + "Invalid choice. Please enter a number between 1 and 5." + "\u001B[0m");
                     break;
             }
         }
