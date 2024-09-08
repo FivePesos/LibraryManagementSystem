@@ -20,6 +20,12 @@ public class Main {
             System.out.print("Enter Book ISBN (Must be unique and 13 digits): ");
             isbn = scan.nextLine();
             System.out.print("Enter Book Copies: ");
+
+            while(!scan.hasNextInt()){
+                scan.next();
+                System.out.print("\u001B[31m"+"Invalid input. Please enter a number of book copies: "+"\u001B[0m");
+            }
+            
             availableCopies = scan.nextInt();
             scan.nextLine(); 
 
@@ -58,6 +64,10 @@ public class Main {
                     System.out.print("Enter Book ISBN (Must be unique and 13 digits): ");
                     isbn = scan.nextLine();
                     System.out.print("Enter Book Copies: ");
+                    while(!scan.hasNextInt()){
+                        scan.next();
+                        System.out.print("\u001B[31m"+"Invalid input. Please enter a number of book copies: "+"\u001B[0m");
+                    }
                     availableCopies = scan.nextInt();
                     scan.nextLine(); 
 
